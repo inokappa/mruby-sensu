@@ -15,7 +15,7 @@ class Sensu
       @header
     end
     def url
-      if @port 
+      if @port
         @host + ":" + @port
       else
         @host
@@ -24,21 +24,22 @@ class Sensu
     def post(req)
       #auth
       http = HttpRequest.new()
-      http.get(url, req)
+      api_endpoint = "#{url}" + "#{req}"
+      http.get(api_endpoint)
     end
-    def auth
-      auth_data = {
-        :auth        =>  nil,
-        :jsonrpc     =>  "2.0",
-        :method      =>  "user.login",
-        :params      =>  {   
-                            :user        => @user,
-                            :password    => @pass,
-                        },
-      }
-      http = HttpRequest.new()
-      response = http.get(@url, JSON::stringify(auth_data), @request)
-      @atoken = JSON::parse(response["body"])["result"]
-    end
+    #def auth
+    #  auth_data = {
+    #    :auth        =>  nil,
+    #    :jsonrpc     =>  "2.0",
+    #    :method      =>  "user.login",
+    #    :params      =>  {
+    #                        :user        => @user,
+    #                        :password    => @pass,
+    #                    },
+    #  }
+    #  http = HttpRequest.new()
+    #  response = http.get(@url, JSON::stringify(auth_data), @request)
+    #  @atoken = JSON::parse(response["body"])["result"]
+    #end
   end
 end

@@ -3,20 +3,23 @@
 require mruby-httprequest mruby-json
 
 ## install by mrbgems
-```bash
-git clone git://github.com/inokappa/mruby-sensu.git
-cp -pr mruby-sensu ${MRUBY_ROOT}/mrbgems/g/.
-echo mruby-sensu >> ${MRUBY_ROOT}/mrbgems/GEMS.active
-cd ${MRUBY_ROOT}
-make
-./bin/mruby ${MRUBY_ROOT}/mrbgems/g/mruby-sensu/example/sensu-api-cient.rb
+
+dd conf.gem line to `build_config.rb`
+
+```build_config.rb
+MRuby::Build.new do |conf|
+
+  conf.gem :git => 'https://github.com/inokappa/mruby-sensu.git'
+
+end
 ```
 
 ## example
 
 ```ruby
 config = {
-  :url  => "http://127.0.0.4567", 
+  :host  => "http://127.0.0.1",
+  :port => "4567",
   :ua   => "mruby-sensu",
   :user => "",
   :pass => "",
@@ -24,19 +27,11 @@ config = {
 
 s = Sensu::Client.new(config)
 
-data = {
-  :method => "get",
-  :object => "clients",
-  :params => {
-               :output => "extend",
-               :filter => {
-                            :host    =>  "example.com",
-                          },
-             },
+req = {
+  :endpoint => "/clients"
 }
 
-puts "request:  #{JSON::stringify(data)}"
-puts "response: #{s.post(data)["body"]}"
+puts s.post(req[:endpoint])["body"]
 ```
 
 # License
