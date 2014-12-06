@@ -19,6 +19,7 @@ class Sensu
         @host + ":" + @port
       else
         @host
+      end
     end
     def post(req)
       #auth
