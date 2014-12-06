@@ -34,7 +34,13 @@ req = {
 puts s.post(req[:endpoint])["body"]
 ```
 
+# Thanks!!
+
+ * [matsumoto-r/mruby-httprequest](https://github.com/matsumoto-r/mruby-httprequest)
+ * [matsumoto-r/mruby-zabbix](https://github.com/matsumoto-r/mruby-zabbix)
+
 # License
+
 under the MIT License:
 
 * http://www.opensource.org/licenses/mit-license.php
