@@ -1,29 +1,29 @@
 class Sensu
   class Client
     def initialize(config)
-      @url  = config[:url]
-      #@user = config[:user]
-      #@pass = config[:pass]
+      @host  = config[:host]
+      @port  = config[:port]
+      @user = config[:user]
+      @pass = config[:pass]
       @ua   = config[:ua]
-      @request = {
+      @header = {
         'Content-Type'   => "application/json-rpc",
         'User-Agent'     => @ua,
       }
     end
     def headers
-      @request
+      @header
     end
-    def post(data)
+    def url
+      if @port 
+        @host + ":" + @port
+      else
+        @host
+    end
+    def post(req)
       #auth
-      method = data[:object] + "." + data[:method] 
-      req_json = {
-        :jsonrpc => "2.0",
-        :method  => method,
-        :params  => data[:params],
-        #:auth    => @atoken,
-      }
       http = HttpRequest.new()
-      http.get(@url, JSON::stringify(req_json), @request)
+      http.get(url, req)
     end
     def auth
       auth_data = {
