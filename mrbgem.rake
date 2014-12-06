@@ -1,5 +1,4 @@
-MRuby::Gem::Specification.new('mruby-zabbix') do |spec|
+MRuby::Gem::Specification.new('mruby-sensu') do |spec|
   spec.license = 'MIT'
-  spec.authors = 'MATSUMOTO Ryosuke'
+  spec.authors = 'YOHEI KAWAHARA'
 end
-
