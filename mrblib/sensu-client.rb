@@ -9,11 +9,10 @@ class Sensu
       @header = {
         'Content-Type'   => "application/json-rpc",
         'User-Agent'     => @ua,
+        'Authorization'  => "Basic " + auth,
       }
     end
-    def headers
-      @header
-    end
+
     def url
       if @port
         @host + ":" + @port
@@ -21,25 +20,16 @@ class Sensu
         @host
       end
     end
+
     def post(req)
-      #auth
       http = HttpRequest.new()
-      api_endpoint = "#{url}" + "#{req}"
-      http.get(api_endpoint)
+      api_endpoint = [ url, req[:endpoint] ]
+      http.get(api_endpoint.join("/"), nil, @header)
     end
-    #def auth
-    #  auth_data = {
-    #    :auth        =>  nil,
-    #    :jsonrpc     =>  "2.0",
-    #    :method      =>  "user.login",
-    #    :params      =>  {
-    #                        :user        => @user,
-    #                        :password    => @pass,
-    #                    },
-    #  }
-    #  http = HttpRequest.new()
-    #  response = http.get(@url, JSON::stringify(auth_data), @request)
-    #  @atoken = JSON::parse(response["body"])["result"]
-    #end
+
+    def auth
+      auth_data = [ @user, ":" , @pass ]
+      Base64.encode(auth_data.join)
+    end
   end
 end

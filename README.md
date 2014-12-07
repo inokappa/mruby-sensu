@@ -1,6 +1,10 @@
 # Sensu API client for mruby
 
-require mruby-httprequest mruby-json
+## require mrbgems
+
+ * mruby-httprequest
+ * mruby-json
+ * mruby-base64
 
 ## install by mrbgems
 
@@ -28,18 +32,21 @@ config = {
 s = Sensu::Client.new(config)
 
 req = {
-  :endpoint => "/clients"
+  :endpoint => "checks"
 }
 
-puts s.post(req[:endpoint])["body"]
+JSON::parse(s.post(req)["body"]).each do |res|
+  p res
+end
 ```
 
-# Thanks!!
+## Thanks!!
 
  * [matsumoto-r/mruby-httprequest](https://github.com/matsumoto-r/mruby-httprequest)
  * [matsumoto-r/mruby-zabbix](https://github.com/matsumoto-r/mruby-zabbix)
+ * [mattn/mruby-base64](https://github.com/mattn/mruby-base64)
 
-# License
+## License
 
 under the MIT License:
 
